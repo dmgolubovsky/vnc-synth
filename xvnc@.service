@@ -1,0 +1,18 @@
+[Unit]
+Description=VNC remote display %I
+After=syslog.target
+
+[Service]
+Environment=DISPLAY=:%i
+Type=simple
+User=root
+# ExecStart=/usr/bin/Xvnc -SecurityTypes None  %i
+ExecStart=/usr/bin/xinit /usr/bin/gnome-shell --sm-disable --x11 -- /usr/bin/Xvnc :%i -depth 24 -inetd -once securitytypes=none
+StandardInput=socket
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+# WantedBy=multi-user.target
+
+
