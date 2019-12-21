@@ -23,19 +23,6 @@ run env DEBIAN_FRONTEND=noninteractive apt install -y tigervnc-standalone-server
 run apt-fast install -y xterm less
 run apt-fast install -y x11-apps
 run apt-fast install -y mesa-utils
-run env DEBIAN_FRONTEND=noninteractive apt-fast install -y gnome-shell xinit alsa-utils locales
-run apt remove -y snapd pulseaudio network-manager sane networkd-dispatcher modemmanager
-run apt remove -y avahi-daemon wpasupplicant bolt
-run apt -y autoremove
-
-run rm -rf /usr/lib/evolution /usr/lib/evolution-data-server
-
-run apt-fast install -y qasmixer
-
-add xvnc@.service /lib/systemd/system
-add xvnc@.socket /lib/systemd/system
-run systemctl enable xvnc@0.socket
-run locale-gen en_US.UTF-8
 
 # Install kx-studio packages
 
@@ -57,7 +44,15 @@ run env DEBIAN_FRONTEND=noninteractive apt-fast -y install kxstudio-meta-all kxs
 
 run rm -rf /install-kx
 
-# Finally clean up
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y xinit alsa-utils locales qasmixer
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y fluxbox
+
+add xvnc@.service /lib/systemd/system
+add xvnc@.socket /lib/systemd/system
+run systemctl enable xvnc@0.socket
+run locale-gen en_US.UTF-8
+
+## Finally clean up
 
 run apt-fast clean
 run apt-get clean autoclean
